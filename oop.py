@@ -17,4 +17,8 @@ def text_to_speech():
         os.system("start speech.mp3")
     else:
         os.system("mpg321 speech.mp3")
-    
+
+def list_languages():
+    languages = lang.tts_langs()
+    language_list = "\n".join([f"{key}: {value}" for key, value in languages.items()])
+    messagebox.showinfo(message= language_list)
