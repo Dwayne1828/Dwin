@@ -22,3 +22,22 @@ def list_languages():
     languages = lang.tts_langs()
     language_list = "\n".join([f"{key}: {value}" for key, value in languages.items()])
     messagebox.showinfo(message= language_list)
+
+def speech_to_text():
+    recognizer = sr.Recognizer()
+    try: 
+        duration = int(duration_entry.get())
+    except:
+        messagebox.showerror("Error", "Please enter a valid duration")
+        return
+
+    with sr.Microphone() as source:
+        messagebox.showinfo(message = "Listening...")
+        recognizer.adjust_for_ambient_noise(source)
+        audio = recognizer.listen(source, phrase_time_limit=duration)
+        messagebox.showinfo(message= "Recognizing...")
+        try:
+            text = recognizer.recognize_google(audio)
+            messagebox.showinfo(message= "You said:\n " + text) 
+        except:
+            messagebox.showerror(message= "Error, could not recognize your voice")
